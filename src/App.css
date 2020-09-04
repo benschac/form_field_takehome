@@ -1,0 +1,93 @@
+/* Generic harmoic series of sizing variables */
+/* https://every-layout.dev/rudiments/modular-scale/ */
+:root {
+  --ratio: 1.5;
+  --s-5: calc(var(--s-4) / var(--ratio));
+  --s-4: calc(var(--s-3) / var(--ratio));
+  --s-3: calc(var(--s-2) / var(--ratio));
+  --s-2: calc(var(--s-1) / var(--ratio));
+  --s-1: calc(var(--s0) / var(--ratio));
+  --s0: 1rem;
+  --s1: calc(var(--s0) * var(--ratio));
+  --s2: calc(var(--s1) * var(--ratio));
+  --s3: calc(var(--s2) * var(--ratio));
+  --s4: calc(var(--s3) * var(--ratio));
+  --s5: calc(var(--s4) * var(--ratio));
+  /* 16px (default text sizing per browser spec) * 75 === 1200px */
+  --max-width: calc(var(--s0) * 75);
+  /* 16px * 48 === 768px */
+  --mobile-view: calc(var(--s0) * 48);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* main column’s max-width should be 1200px */
+/* centered, and the image */
+/* form should each
+take 50% of the width. */
+
+/* 768px or below, the image should stack
+above the form. The HTML should be well-formed and accessible. */
+
+img {
+  width: 100%;
+  margin: 0 var(--s0);
+}
+
+main > * {
+  /* https://twitter.com/benschac/status/1270783035168915458?s=20 */
+  /* But inverse */
+  width: min(var(--max-width), 100vw);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+main > * > * {
+  flex-grow: 1;
+  /* https://heydonworks.com/article/the-flexbox-holy-albatross/ */
+  /* We can create a container query without
+     needing to override our css with a media query
+   */
+  min-width: 50%;
+  /* Once we hit a negative flex-basis CSS error handles the
+    value to zero. Flex grow is 1 taking all available space.
+    Creating the desired break point.
+   */
+  flex-basis: calc((var(--mobile-view) - 100%) * 999);
+  display: flex;
+  justify-content: center;
+}
+
+main > h3 {
+  justify-content: center;
+}
+
+form,
+input {
+  width: 100%;
+  padding: var(--s-2);
+}
+
+form {
+  padding: 0 var(--s1) var(--s2) var(--s1);
+  justify-content: space-between;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  line-height: var(--ratio);
+}
+
+button[type="submit"] {
+  margin: var(--s1) auto;
+  padding: var(--s-1) var(--s3);
+}
